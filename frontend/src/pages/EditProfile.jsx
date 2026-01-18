@@ -24,7 +24,9 @@ function EditProfile() {
       const formData = new FormData()
       formData.append("name", name)
       formData.append("description", description)
-      formData.append("photoUrl", photoUrl)
+      if (photoUrl) {
+        formData.append("photoUrl", photoUrl)
+      }
 
       const result = await axios.post(serverUrl + "/api/user/profile", formData,
         { withCredentials: true })
