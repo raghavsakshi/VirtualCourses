@@ -26,7 +26,7 @@ import getAllReview from './customHooks/getAllReview'
 import SearchWithAi from './pages/searchWithAi'
 import { ClipLoader } from 'react-spinners';
 
-export const serverUrl = "http://localhost:8000"
+export const serverUrl = "https://virtualcourses-jekt.onrender.com"
 function App() {
   getCurrentUser()
   getCreatorCourse()
