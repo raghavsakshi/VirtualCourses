@@ -17,7 +17,7 @@ app.use(cookieParser())
 
 
 app.use(cors({
-    origin:"https://virtualcourses-5.onrender.com",
+    origin:"https://onlinelearning-99g4.onrender.com",
     credentials:true
 }))
 
