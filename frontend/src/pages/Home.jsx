@@ -5,7 +5,7 @@ import ai from '../assets/ai.png'
 import ai1 from '../assets/SearchAi.png'
 
 import { SiViaplay } from "react-icons/si";
-import Logos from '../Component/logos'
+import Logos from '../Component/Logos'
 import ExploreCourses from '../Component/ExploreCourses'
 import CardPage from '../Component/CardPage'
 import { Navigate, useNavigate } from 'react-router-dom'
