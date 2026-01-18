@@ -15,8 +15,17 @@ function EditProfile() {
   const [name, setName] = useState(userData.name || "")
   const [description, setDescription] = useState(userData.description || "")
   const [photoUrl, SetPhotoUrl] = useState(null)
+  const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      SetPhotoUrl(file)
+      setPreview(URL.createObjectURL(file))
+    }
+  }
 
   const handleEditProfile = async () => {
     setLoading(true)
@@ -29,7 +38,12 @@ function EditProfile() {
       }
 
       const result = await axios.post(serverUrl + "/api/user/profile", formData,
-        { withCredentials: true })
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
       dispatch(setUserData(result.data))
       setLoading(false)
       navigate("/")
@@ -49,12 +63,18 @@ function EditProfile() {
         <h2 className='text-2xl font-bold mb-6 text-gray-800'>Edit Profile</h2>
         <form action='' className='space-y-5' onSubmit={(e) => e.preventDefault()}>
           <div className='flex flex-col items-center text-center'>
-            {userData?.photoUrl ? <img src={userData?.photoUrl}
-              className='w-24 h-24 rounded-full object-cover border-4 border-[black]' alt='' /> :
+            {preview ? (
+              <img src={preview}
+                className='w-24 h-24 rounded-full object-cover border-4 border-[black]' alt='Preview' />
+            ) : userData?.photoUrl ? (
+              <img src={userData?.photoUrl}
+                className='w-24 h-24 rounded-full object-cover border-4 border-[black]' alt='' />
+            ) : (
               <div className='w-24 h-24 rounded-full text-white flex items-center justify-center text-[30px]
         border-2 border-white bg-black'>
                 {userData?.name.slice(0, 1).toUpperCase()}
-              </div>}
+              </div>
+            )}
           </div>
           <div>
             <label htmlFor="image" className='text-sm font-medium  text-gray-700'>Select Avatar</label>
@@ -63,7 +83,7 @@ function EditProfile() {
               placeholder='PhotoUrl'
               accept='image/*'
               className='w-full px-4 py-2 border rounded-md text-sm'
-              onChange={(e) => SetPhotoUrl(e.target.files[0])} />
+              onChange={handleFileChange} />
           </div>
 
           <div>

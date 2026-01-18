@@ -16,14 +16,23 @@ export const getCurrentUser = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const userId = req.userId
+        console.log("Update Profile Request - userId:", userId);
+        console.log("Update Profile Request - body:", req.body);
+        console.log("Update Profile Request - file:", req.file);
+
         const { description, name } = req.body
-        const updateData = { name, description }
+        const updateData = {}
+        if (name) updateData.name = name
+        if (description) updateData.description = description
 
         if (req.file) {
+            console.log("Uploading image to Cloudinary...");
             updateData.photoUrl = await uploadOnCloudinary(req.file.path)
+            console.log("Cloudinary Upload Success - photoUrl:", updateData.photoUrl);
         }
 
-        const user = await User.findByIdAndUpdate(userId, updateData, { new: true }).select("-password").populate("enrolledCourses")
+        console.log("Updating user in database - updateData:", updateData);
+        const user = await User.findByIdAndUpdate(userId, { $set: updateData }, { new: true }).select("-password").populate("enrolledCourses")
 
         if (!user) {
             return res.status(400).json({ message: "User not found" })
