@@ -17,13 +17,13 @@ import EditCourses from './pages/Educator/EditCourses'
 import getPublishedCourse from './customHooks/getPublishedCourse'
 import AllCourses from './pages/AllCourses'
 import EditLecture from './pages/Educator/EditLecture'
-import CreateLecture from './pages/Educator/createLecture'
+import CreateLecture from './pages/Educator/CreateLecture'
 import ViewCourses from './pages/ViewCourses'
 import ScrollToTop from './Component/ScrollToTop'
 import ViewLecture from './pages/ViewLecture'
 import MyEnrolledCourses from './pages/MyEnrolledCourses'
 import getAllReview from './customHooks/getAllReview'
-import SearchWithAi from './pages/searchWithAi'
+import SearchWithAi from './pages/SearchWithAi'
 import { ClipLoader } from 'react-spinners';
 
 export const serverUrl = "https://virtualcourses-jekt.onrender.com"
