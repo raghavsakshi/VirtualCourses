@@ -27,7 +27,7 @@ return res.status(400).json({message:"User is already exist" })
         res.cookie("token",token,{
             httpOnly:true,
             secure:process.env.NODE_ENV === 'production',
-            sameSite:"Strict",
+            sameSite:"none",
             maxAge:7*24*60*60*1000
         })
     return res.status(201).json(user)
@@ -50,7 +50,7 @@ return res.status(400).json({message:"Incorrect Password"})
         res.cookie("token",token,{
             httpOnly:true,
             secure:process.env.NODE_ENV === 'production',
-            sameSite:"Strict",
+            sameSite:"none",
             maxAge:7*24*60*60*1000
         })
         return res.status(200).json(user)
@@ -137,7 +137,7 @@ return res.status(200).json({message: "Otp Send Successfully"})
         res.cookie("token",token,{
             httpOnly:true,
             secure:process.env.NODE_ENV === 'production',
-            sameSite:"Strict",
+            sameSite:"none",
             maxAge: 7*24*60*60*1000
         })
         return res.status(200).json(user)
