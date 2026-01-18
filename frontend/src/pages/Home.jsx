@@ -11,6 +11,7 @@ import CardPage from '../Component/CardPage'
 import { Navigate, useNavigate } from 'react-router-dom'
 import usePublishedCourses from '../customHooks/getPublishedCourse'
 import useCreatorCourses from '../customHooks/getCreatorCourse'
+import useGetAllReview from '../customHooks/getAllReview'
 import Footer from '../Component/Footer'
 import About from '../Component/About'
 import ReviewPage from '../Component/ReviewPage'
@@ -19,6 +20,7 @@ function Home() {
   const navigate = useNavigate()
   usePublishedCourses()
   useCreatorCourses()
+  useGetAllReview()
 
   return (
     <div className='w-[100%] overflow-hidden'>

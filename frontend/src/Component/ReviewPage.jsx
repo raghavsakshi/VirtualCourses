@@ -19,13 +19,13 @@ function ReviewPage() {
         and professionals worldwide.
       </span>
       <div className=' flex items-center justify-center w-[100%] min-[10vh] flex-wrap
-        gap-[50x] lg:p-[50px] md:p-[30px] p-[10px] mb-[40px]'>
+        gap-[50px] lg:p-[50px] md:p-[30px] p-[10px] mb-[40px]'>
 
         {
           latestReview?.map((review, index) => (
             <ReviewCard key={index} comment={review.comment} rating={review.rating}
-              photoUrl={review.user.photoUrl} courseTitle={review.course.title}
-              description={review.user.description} name={review.user.name} />
+              photoUrl={review?.user?.photoUrl} courseTitle={review?.course?.title}
+              description={review?.user?.description} name={review?.user?.name} />
           ))
         }
       </div>
