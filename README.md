@@ -38,11 +38,20 @@ A full-stack web application for online course management with separate educator
 - Cloudinary account
 - Email service (Gmail with app password)
 
+## 🌟 Recent Improvements
+
+In the latest update, several critical issues were resolved to enhance user experience and platform stability:
+
+- **Enhanced Profile Visibility:** Integrated the `Nav` component across all key pages (`ViewCourses`, `ViewLecture`, `MyEnrolledCourses`, etc.) to ensure the user profile and navigation are always accessible.
+- **Fixed Category Filtering:** Synchronized category values between the filter and course creation modules, resolving an issue where the category filter was not working.
+- **Improved Route Persistence:** Added an `authLoading` state to handle page refreshes correctly, preventing unintended redirects to the signup page.
+- **Resolved Image Display Issues:** Fixed property name typos to ensure course thumbnails are correctly displayed on course view pages.
+
 ## ⚙️ Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/raghavsakshi/VirtualCourses.git
    cd VirtualCourses
    ```
 
