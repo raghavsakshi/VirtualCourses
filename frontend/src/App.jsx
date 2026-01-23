@@ -51,40 +51,40 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/signup' element={!userData ? <SignUp /> :
-          <Navigate to={"/"} />} />
-        <Route path='/login' element={!userData ? <Login /> : <Navigate to={"/"} />} />
-        <Route path='/profile' element={userData ? <Profile /> :
-          <Navigate to={"/signup"} />} />
+        <Route path='/signup' element={!authLoading && !userData ? <SignUp /> :
+          !authLoading ? <Navigate to={"/"} /> : null} />
+        <Route path='/login' element={!authLoading && !userData ? <Login /> : !authLoading ? <Navigate to={"/"} /> : null} />
+        <Route path='/profile' element={!authLoading && userData ? <Profile /> :
+          !authLoading ? <Navigate to={"/signup"} /> : null} />
 
         <Route path='/forget'
-          element={!userData ? <ForgetPassword /> : <Navigate to={"/"} />} />
+          element={!authLoading && !userData ? <ForgetPassword /> : !authLoading ? <Navigate to={"/"} /> : null} />
 
         <Route path='/editprofile'
-          element={userData ? <EditProfile /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <EditProfile /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/allcourses'
-          element={userData ? <AllCourses /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <AllCourses /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/dashboard'
-          element={userData?.role === "educator" ? <Dashboard /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <Dashboard /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/courses'
-          element={userData?.role === "educator" ? <Courses /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <Courses /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
 
         <Route path='/createCourse'
-          element={userData?.role === "educator" ? <CreateCourse /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <CreateCourse /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/editCourse/:courseId'
-          element={userData?.role === "educator" ? <EditCourses /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <EditCourses /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/createlecture/:courseId'
-          element={userData?.role === "educator" ? <CreateLecture /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <CreateLecture /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/editlecture/:courseId/:lectureId'
-          element={userData?.role === "educator" ? <EditLecture /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData?.role === "educator" ? <EditLecture /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/viewcourse/:courseId'
-          element={userData ? <ViewCourses /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <ViewCourses /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/viewlecture/:courseId'
-          element={userData ? <ViewLecture /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <ViewLecture /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/mycourses'
-          element={userData ? <MyEnrolledCourses /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <MyEnrolledCourses /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
         <Route path='/search'
-          element={userData ? <SearchWithAi /> : <Navigate to={"/signup"} />} />
+          element={!authLoading && userData ? <SearchWithAi /> : !authLoading ? <Navigate to={"/signup"} /> : null} />
       </Routes>
     </>
   )
