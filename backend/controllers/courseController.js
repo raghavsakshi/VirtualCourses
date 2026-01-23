@@ -104,7 +104,6 @@ export const removeCourse = async (req, res) => {
         if (!course) {
             return res.status(400).json({ message: " Course is not found" })
         }
-        await Course.findByIdAndDelete(courseId)
         return res.status(200).json({ message: "Course removed" })
     } catch (error) {
         return res.status(500).json({ message: `failed to delete Course By Id ${error}` })
@@ -170,7 +169,7 @@ export const editLecture = async (req, res) => {
             videoUrl = await uploadOnCloudinary(req.file.path)
             lecture.videoUrl = videoUrl
         }
-        if (!lectureTitle) {
+        if (lectureTitle) {
             lecture.lectureTitle = lectureTitle
         }
         lecture.isPreviewFree = isPreviewFree
@@ -189,8 +188,8 @@ export const removeLecture = async (req, res) => {
             return res.status(404).json({ message: " lecture is not found" })
         }
         await Course.updateOne(
-            { lecture: lectureId },
-            { $pull: { lecture: lectureId } }
+            { lectures: lectureId },
+            { $pull: { lectures: lectureId } }
         )
         return res.status(200).json({ message: "lecture removed" })
     } catch (error) {
@@ -202,7 +201,7 @@ export const removeLecture = async (req, res) => {
 export const getCreatorById = async (req, res) => {
     try {
 
-        const { userId } = req.body
+        const { userId } = req.params
 
 
         const user = await User.findById(userId).select("-password")
