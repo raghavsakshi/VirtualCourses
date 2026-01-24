@@ -15,17 +15,19 @@ function ReviewCard({ comment, rating, photoUrl, name, description, courseTitle 
         }
       </div>
       <p className='text-gray-700 text-sm '>Review For:
-        <span className='font-semibold'>{courseTitle}</span></p>
+        <span className='font-semibold ml-1'>{courseTitle || 'Unknown Course'}</span></p>
       <p className='text-gray-700 text-sm mb-5'>
-        <span className='font-semibold'>{comment}</span></p>
+        <span className='font-semibold italic'>"{comment || 'No comment provided'}"</span></p>
       <div className='flex items-center gap-2'>
-        <img src={photoUrl} alt="" className='w-10 h-10 rounded-full object-cover' />
+        <img
+          src={photoUrl || 'https://www.w3schools.com/howto/img_avatar.png'}
+          alt={name}
+          className='w-10 h-10 rounded-full object-cover border border-gray-200'
+        />
         <div>
-          <h2 className='font-semibold text-gray-800 text-sm'>{name}</h2>
-          <p className='text-xs text-gray-500'>{description}</p>
+          <h2 className='font-semibold text-gray-800 text-sm'>{name || 'Anonymous User'}</h2>
+          <p className='text-xs text-gray-500 line-clamp-1'>{description || 'Student'}</p>
         </div>
-
-
       </div>
 
     </div>

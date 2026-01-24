@@ -6,19 +6,19 @@ import axios from 'axios'
 
 
 const useGetAllReview = () => {
-    const dispatch =useDispatch()
-  useEffect(()=>{
-const allReview =async () =>{
-    try {
-        const result =await axios.get(serverUrl+ "/api/review/getreview",{withCredentials:true})
-     dispatch(setReviewData(result.data))
-     console.log(result.data)
-    } catch (error) {
-        console.log(error)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const allReview = async () => {
+      try {
+        const result = await axios.get(serverUrl + "/api/review/getreview", { withCredentials: true })
+        dispatch(setReviewData(result.data))
+        console.log('Fetched Reviews:', result.data)
+      } catch (error) {
+        console.error('Error fetching reviews:', error)
+      }
     }
-}
-allReview()
-  },[dispatch])
+    allReview()
+  }, [dispatch])
 }
 
 export default useGetAllReview

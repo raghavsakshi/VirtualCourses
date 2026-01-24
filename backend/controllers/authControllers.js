@@ -30,7 +30,7 @@ export const signUp = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "none",
+            sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(201).json(user)
@@ -57,7 +57,7 @@ export const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "none",
+            sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(200).json(user)
@@ -139,12 +139,17 @@ export const googleAuth = async (req, res) => {
                 role,
                 googleAuth: true
             })
+        } else {
+            // Update existing user if they are logging in with Google
+            user.googleAuth = true;
+            if (role) user.role = role;
+            await user.save();
         }
         let token = await genToken(user._id)
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: "none",
+            sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(200).json(user)

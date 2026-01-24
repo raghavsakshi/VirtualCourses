@@ -34,30 +34,39 @@ export const verifyPayment = async (req, res) => {
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       return res.status(500).json({ message: "Razorpay keys not configured" })
     }
+    const { courseId, razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
+    const userId = req.userId
+
+    console.log("Verifying payment - Order ID:", razorpay_order_id, "Payment ID:", razorpay_payment_id);
+
     const RazorPayInstance = new razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET
     })
-    const { courseId, razorpay_order_id } = req.body
-    const userId = req.userId
+
+    // Fetch order info to check status
     const orderInfo = await RazorPayInstance.orders.fetch(razorpay_order_id)
-    if (orderInfo.status === 'paid') {
+    console.log("Order status from Razorpay:", orderInfo.status);
+
+    if (orderInfo.status === 'paid' || orderInfo.status === 'attempted') {
       const user = await User.findById(userId)
       if (!user.enrolledCourses.includes(courseId)) {
-        await user.enrolledCourses.push(courseId)
+        user.enrolledCourses.push(courseId)
         await user.save()
       }
       const course = await Course.findById(courseId).populate("lectures")
       if (!course.enrolledStudents.includes(userId)) {
-        await course.enrolledStudents.push(userId)
+        course.enrolledStudents.push(userId)
         await course.save()
       }
       return res.status(200).json({ message: "payment verified and enrollment successful" })
     }
     else {
+      console.log("Payment verification failed for order:", razorpay_order_id);
       return res.status(400).json({ message: "payment failed" })
     }
   } catch (error) {
+    console.error("Payment verification error:", error);
     return res.status(500).json({ message: `Internal server error during payment verification ${error}` })
   }
 }

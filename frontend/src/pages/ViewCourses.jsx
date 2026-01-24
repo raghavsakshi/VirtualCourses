@@ -100,7 +100,7 @@ function ViewCourses() {
         currency: 'INR',
         name: "VIRTUAL COURSES",
         description: "COURSE ENROLLMENT PAYMENT",
-        order_id: "orderData.data.id",
+        order_id: orderData.data.id,
         handler: async function (response) {
           console.log("Razorpay Response ", response)
           try {
@@ -188,7 +188,7 @@ function ViewCourses() {
               {!isEnrolled ? <button className='bg-[black] text-white px-6 py-2 hover:bg-gray-700 mt-3
  cursor-pointer' onClick={() => handleEnroll(userData._id, courseId)}>Enroll Now</button> :
                 <button className='bg-green-100 text-green-500 px-6 py-2 hover:bg-gray-700 mt-3
- cursor-pointer'  onClick={() => navigate('/viewlecture/${courseId}')}>Watch Now</button>}
+ cursor-pointer'  onClick={() => navigate(`/viewlecture/${courseId}`)}>Watch Now</button>}
             </div>
           </div>
         </div>

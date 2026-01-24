@@ -24,6 +24,7 @@ import ViewLecture from './pages/ViewLecture'
 import MyEnrolledCourses from './pages/MyEnrolledCourses'
 import getAllReview from './customHooks/getAllReview'
 import SearchWithAi from './pages/SearchWithAi'
+import ReviewPage from './Component/ReviewPage'
 import { ClipLoader } from 'react-spinners';
 
 export const serverUrl = "http://localhost:8000"
@@ -51,40 +52,70 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/index.html' element={<Navigate to="/" replace />} />
-        <Route path='/signup' element={!userData ? <SignUp /> : <Navigate to={"/"} replace />} />
-        <Route path='/login' element={!userData ? <Login /> : <Navigate to={"/"} replace />} />
-        <Route path='/profile' element={userData ? <Profile /> :
-          (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+
+        <Route path='/signup' element={!authLoading && !userData ? <SignUp /> :
+          !authLoading ? <Navigate to={"/"} replace /> : null} />
+        <Route path='/login' element={!authLoading && !userData ? <Login /> :
+          !authLoading ? <Navigate to={"/"} replace /> : null} />
+
+        <Route path='/profile' element={!authLoading && userData ? <Profile /> :
+          !authLoading ? <Navigate to={"/login"} replace /> : null} />
 
         <Route path='/forget'
-          element={!userData ? <ForgetPassword /> : <Navigate to={"/"} replace />} />
+          element={!authLoading && !userData ? <ForgetPassword /> :
+            !authLoading ? <Navigate to={"/"} replace /> : null} />
 
         <Route path='/editprofile'
-          element={userData ? <EditProfile /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData ? <EditProfile /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/allcourses'
-          element={userData ? <AllCourses /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData ? <AllCourses /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/dashboard'
-          element={userData?.role === "educator" ? <Dashboard /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <Dashboard /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/courses'
-          element={userData?.role === "educator" ? <Courses /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <Courses /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
 
         <Route path='/createCourse'
-          element={userData?.role === "educator" ? <CreateCourse /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <CreateCourse /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/editCourse/:courseId'
-          element={userData?.role === "educator" ? <EditCourses /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <EditCourses /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/createlecture/:courseId'
-          element={userData?.role === "educator" ? <CreateLecture /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <CreateLecture /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/editlecture/:courseId/:lectureId'
-          element={userData?.role === "educator" ? <EditLecture /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData?.role === "educator" ? <EditLecture /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/viewcourse/:courseId'
-          element={userData ? <ViewCourses /> : (authLoading ? null : <Navigate to={"/signup"} replace />)} />
+          element={!authLoading && userData ? <ViewCourses /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/viewlecture/:courseId'
-          element={userData ? <ViewLecture /> : (authLoading ? null : <Navigate to="/signup" replace />)} />
+          element={!authLoading && userData ? <ViewLecture /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/mycourses'
-          element={userData ? <MyEnrolledCourses /> : (authLoading ? null : <Navigate to="/signup" replace />)} />
+          element={!authLoading && userData ? <MyEnrolledCourses /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
         <Route path='/search'
-          element={userData ? <SearchWithAi /> : (authLoading ? null : <Navigate to="/signup" replace />)} />
+          element={!authLoading && userData ? <SearchWithAi /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
+
+        <Route path='/reviews'
+          element={!authLoading && userData ? <ReviewPage /> :
+            !authLoading ? <Navigate to={"/login"} replace /> : null} />
       </Routes>
     </>
   )

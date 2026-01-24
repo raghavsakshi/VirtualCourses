@@ -4,12 +4,17 @@ import ReviewCard from './ReviewCard'
 
 function ReviewPage() {
   const { reviewData } = useSelector(state => state.review)
-  const [latestReview, setLatestReview] = useState(null)
+  const [latestReview, setLatestReview] = useState([])
+
   useEffect(() => {
-    setLatestReview(reviewData?.slice(0, 6))
+    console.log('ReviewPage - All reviewData from Redux:', reviewData)
+    if (reviewData && Array.isArray(reviewData)) {
+      setLatestReview(reviewData.slice(0, 6))
+    }
   }, [reviewData])
+
   return (
-    <div className='flex items-center justify-center flex-col'>
+    <div className='flex items-center justify-center flex-col min-h-[400px]'>
       <h1 className='md:text-[45px] text-[30px]
          font-semibold text-center mt-[30px] px-[20px]'>
         Real Reviews for Real Courses</h1>
@@ -18,15 +23,28 @@ function ReviewPage() {
         experiences through real feedback from students
         and professionals worldwide.
       </span>
-      <div className=' flex items-center justify-center w-[100%] min-[10vh] flex-wrap
+      <div className='flex items-center justify-center w-full flex-wrap
         gap-[50px] lg:p-[50px] md:p-[30px] p-[10px] mb-[40px]'>
 
         {
-          latestReview?.map((review, index) => (
-            <ReviewCard key={index} comment={review.comment} rating={review.rating}
-              photoUrl={review?.user?.photoUrl} courseTitle={review?.course?.title}
-              description={review?.user?.description} name={review?.user?.name} />
-          ))
+          latestReview.length > 0 ? (
+            latestReview.map((review, index) => (
+              <ReviewCard
+                key={review._id || index}
+                comment={review.comment}
+                rating={review.rating}
+                photoUrl={review?.user?.photoUrl}
+                courseTitle={review?.course?.title}
+                description={review?.user?.description}
+                name={review?.user?.name}
+              />
+            ))
+          ) : (
+            <div className='flex flex-col items-center gap-4'>
+              <p className='text-gray-500 italic text-lg'>No review messages available on the homepage yet.</p>
+              <p className='text-sm text-gray-400'>(Enroll in a course and leave a review to see it here!)</p>
+            </div>
+          )
         }
       </div>
     </div>

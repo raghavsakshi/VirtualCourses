@@ -31,8 +31,10 @@ export const createReview = async (req, res) => {
 export const getReviews = async (req, res) => {
     try {
         const review = await Review.find({}).populate("course").populate("user").sort({ reviewedAt: -1 })
+        console.log(`Successfully fetched ${review.length} reviews from database`)
         return res.status(200).json(review)
     } catch (error) {
+        console.error('getReviews error:', error)
         return res.status(500).json({ message: `Failed to get reviews ${error} ` })
     }
 }
