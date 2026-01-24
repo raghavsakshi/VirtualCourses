@@ -53,7 +53,8 @@ const distPath = path.resolve(__dirname, "..", "frontend", "dist")
 app.use(express.static(distPath))
 
 // Catch-all: serve the React app's index.html for any remaining requests
-app.get("/:path*", (req, res) => {
+// Catch-all: serve the React app's index.html for any remaining requests
+app.use((req, res) => {
     // Only serve index.html if it's not an API call
     if (!req.path.startsWith('/api')) {
         const indexPath = path.resolve(distPath, "index.html")
