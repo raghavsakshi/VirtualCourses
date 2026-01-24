@@ -22,44 +22,44 @@ app.use(express.json())
 app.use(cookieParser())
 
 
-const allowedOrigins = [
-    "https://onlinelearning-wo6v.onrender.com",
-    "https://onlinelearning-ntwm.onrender.com",
-    "https://virtualcourses-osdy.onrender.com",
-    "http://localhost:5173"
-]
 
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".onrender.com")) {
-            return callback(null, true);
+
+        const isAllowed = [
+            "http://localhost:5173",
+            "http://localhost:8000"
+        ].includes(origin) || origin.endsWith(".onrender.com");
+
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
         }
-        return callback(new Error('Not allowed by CORS'));
     },
     credentials: true
 }))
 
 app.use("/api/auth", authRouter)
-
 app.use("/api/user", userRouter)
 app.use("/api/course", courseRouter)
 app.use("/api/order", paymentRouter)
 app.use("/api/review", reviewRouter)
 
 // Serve static files from the React app
-const distPath = path.join(__dirname, "../frontend/dist")
+const distPath = path.resolve(__dirname, "..", "frontend", "dist")
 app.use(express.static(distPath))
 
 // Catch-all: serve the React app's index.html for any remaining requests
 app.get("*", (req, res) => {
     // Only serve index.html if it's not an API call
     if (!req.path.startsWith('/api')) {
-        const indexPath = path.join(distPath, "index.html")
+        const indexPath = path.resolve(distPath, "index.html")
         res.sendFile(indexPath, (err) => {
             if (err) {
-                console.error("Error sending index.html:", err)
+                console.error("Error sending index.html from path:", indexPath, err)
                 res.status(500).send("Error loading the application. Please try again later.")
             }
         })
