@@ -23,7 +23,7 @@ app.use(cookieParser())
 
 
 app.use(cors({
-    origin: ["https://onlinelearning-wo6v.onrender.com", "http://localhost:5173"],
+    origin:"https://onlinelearning-ntwm.onrender.com",
     credentials: true
 }))
 
