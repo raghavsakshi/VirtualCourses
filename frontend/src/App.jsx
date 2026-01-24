@@ -27,7 +27,7 @@ import SearchWithAi from './pages/SearchWithAi'
 import ReviewPage from './Component/ReviewPage'
 import { ClipLoader } from 'react-spinners';
 
-export const serverUrl = "https://virtualcourses-osdy.onrender.com"
+export const serverUrl = import.meta.env.MODE === "production" ? "" : "http://localhost:8000"
 
 function App() {
   getCurrentUser()

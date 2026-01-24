@@ -38,7 +38,7 @@ app.use("/api/review", reviewRouter)
 app.use(express.static(path.join(__dirname, "../frontend/dist")))
 
 // Catch-all: serve the React app's index.html for any remaining requests
-app.use((req, res) => {
+app.get("*", (req, res) => {
     // Only serve index.html if it's not an API call
     if (!req.path.startsWith('/api')) {
         res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
