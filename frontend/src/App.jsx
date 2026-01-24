@@ -37,13 +37,17 @@ function App() {
   getAllReview()
   const { userData, authLoading } = useSelector(state => state.user)
 
+  console.log("App.jsx - authLoading:", authLoading, "userData:", userData)
+
   if (authLoading) {
+    console.log("App.jsx - Rendering Loader...")
     return (
       <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="black" size={50} />
       </div>
     )
   }
+  console.log("App.jsx - Rendering Routes...")
 
   return (
 
