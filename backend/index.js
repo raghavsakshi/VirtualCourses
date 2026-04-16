@@ -67,11 +67,15 @@ app.use((req, res) => {
         res.status(404).json({ message: "API endpoint not found" })
     }
 })
-try {
-    app.listen(port, () => {
-        console.log(`Server started on port ${port}`)
-        connectDb()
-    })
-} catch (error) {
-    console.error('Error starting server:', error.message)
+const startServer = async () => {
+    try {
+        await connectDb()
+        app.listen(port || 8000, () => {
+            console.log(`Server started on port ${port || 8000}`)
+        })
+    } catch (error) {
+        console.error('Failed to start server:', error.message)
+    }
 }
+
+startServer()
