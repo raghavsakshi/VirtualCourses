@@ -29,7 +29,7 @@ app.use(cors({
         if (!origin) return callback(null, true);
 
         const isAllowed = [
-    "https://onlinelearning-8ie0.onrender.com"
+   "https://onlinelearning-ntwm.onrender.com"
         ].includes(origin) || origin.endsWith(".onrender.com");
 
         if (isAllowed) {
