@@ -29,8 +29,7 @@ app.use(cors({
         if (!origin) return callback(null, true);
 
         const isAllowed = [
-            "http://localhost:5173",
-            "http://localhost:8000"
+    "https://onlinelearning-8ie0.onrender.com"
         ].includes(origin) || origin.endsWith(".onrender.com");
 
         if (isAllowed) {
